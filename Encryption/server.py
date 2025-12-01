@@ -1,7 +1,7 @@
 import socket 
 import ssl
 
-HOST = 'localhost'
+HOST = 'main-device.tailbb3d90.ts.net'
 PORT = 12345
 
 context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
