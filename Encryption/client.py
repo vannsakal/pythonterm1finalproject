@@ -1,8 +1,8 @@
 import socket 
 import ssl
 
-HOST = '172.23.32.174'
-PORT = 12345
+HOST = 'localhost'
+PORT = 12346
 
 context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
 context.load_verify_locations(cafile='server.crt')
@@ -18,6 +18,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
             print(f'Received from server: {data.decode()}')
     except ssl.SSLError as e:
         print(f'SSL Error: {e}')
-    finally:
-        sock.close()
+    # finally:
+    #     # sock.close()
+    #     pass    
 
