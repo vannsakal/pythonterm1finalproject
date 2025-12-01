@@ -1,7 +1,7 @@
 import socket 
 import ssl
 
-HOST = '172.23.32.174'
+HOST = 'localhost'
 PORT = 12345
 
 context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
